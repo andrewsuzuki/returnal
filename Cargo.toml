@@ -1,0 +1,7 @@
+[package]
+name = "returnal"
+version = "0.1.0"
+authors = ["Andrew Suzuki <andrew.b.suzuki@gmail.com>"]
+
+[dependencies]
+rustbox = "*"
