@@ -2,6 +2,10 @@
 
 *returnal*, the text editor
 
+this is the server. available clients:
+
+* [returnal-term](https://github.com/andrewsuzuki/returnal-term)
+
 ## goals
 
 * primarily targeting modern platforms, not the amiga
@@ -42,5 +46,6 @@
 * basic :-commands (w, q, e)
 * line numbers (relative or static)
 * ... more commands and objects ...
+* search
 * syntax highlighting
 * color schemes
