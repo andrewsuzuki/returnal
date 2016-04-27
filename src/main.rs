@@ -3,13 +3,12 @@
 extern crate ws;
 extern crate clap;
 extern crate rustc_serialize;
+extern crate returnal;
 
 use clap::App;
 use clap::Arg;
-
 use ws::listen;
-
-use rustc_serialize::json;
+use returnal::{Editor};
 
 pub fn version() -> String {
     format!("{}.{}.{}{}",
@@ -17,31 +16,6 @@ pub fn version() -> String {
                      env!("CARGO_PKG_VERSION_MINOR"),
                      env!("CARGO_PKG_VERSION_PATCH"),
                      option_env!("CARGO_PKG_VERSION_PRE").unwrap_or(""))
-}
-
-#[derive(Copy, Clone, RustcEncodable)]
-struct Cursor {
-    x: usize,
-    y: usize
-}
-
-impl Cursor {
-    fn new(x: usize, y: usize) -> Self {
-        Cursor { x: x, y: y }
-    }
-}
-
-#[derive(Copy, Clone, RustcEncodable)]
-struct Editor {
-    cursor: Cursor
-}
-
-impl Editor {
-    fn new() -> Self {
-        Editor {
-            cursor: Cursor::new(0, 0)
-        }
-    }
 }
 
 fn main() {
@@ -65,20 +39,10 @@ fn main() {
                       .unwrap_or(3443);
 
     println!("will use port {}", port);
-    println!("press ctrl-c to quit");
-
-    let mut editor = Editor::new();
 
     if let Err(error) = listen(("127.0.0.1", port), |out| {
-
-        move |msg| {
-            println!("received message '{}'", msg);
-
-            let response = json::encode(&editor).unwrap();
-
-            out.send(response)
-        }
-
+        let mut editor = Editor::new(out);
+        move |msg| editor.receive(msg)
     }) {
         println!("failed to create websocket: {:?}", error);
     }

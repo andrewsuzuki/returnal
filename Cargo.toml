@@ -3,6 +3,10 @@ name = "returnal"
 version = "0.1.0"
 authors = ["Andrew Suzuki <andrew.b.suzuki@gmail.com>"]
 
+[lib]
+name = "returnal"
+path = "src/returnal/lib.rs"
+
 [dependencies]
 clap = "2"
 rustc-serialize = "0.3.19"
