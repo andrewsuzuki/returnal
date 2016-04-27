@@ -4,3 +4,9 @@ version = "0.1.0"
 authors = ["Andrew Suzuki <andrew.b.suzuki@gmail.com>"]
 
 [dependencies]
+clap = "2"
+rustc-serialize = "0.3.19"
+
+[dependencies.ws]
+version = "*"
+features = ["ssl"]
