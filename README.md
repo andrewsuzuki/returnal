@@ -49,3 +49,7 @@ this is the server. available clients:
 * search
 * syntax highlighting
 * color schemes
+
+## dev notes
+
+see [NOTES.md](https://github.com/andrewsuzuki/returnal/blob/master/NOTES.md)

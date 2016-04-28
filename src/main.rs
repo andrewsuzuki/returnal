@@ -19,8 +19,10 @@ pub fn version() -> String {
 }
 
 fn main() {
+    // get version number
     let version = version();
 
+    // configure clap to parse cli arguments
     let matches = App::new("returnal")
                         .version(version.as_ref())
                         .author("andrew suzuki")
@@ -33,15 +35,19 @@ fn main() {
                                     .takes_value(true))
                         .get_matches();
 
+    // determine port number based on argument
     let port: u16 = matches.value_of("port")
                       .unwrap_or("3443")
                       .parse::<u16>()
                       .unwrap_or(3443);
-
     println!("will use port {}", port);
 
+    // listen for websocket connections on specified port
     if let Err(error) = listen(("127.0.0.1", port), |out| {
+        // create editor
         let mut editor = Editor::new(out);
+
+        // forward received messages to editor
         move |msg| editor.receive(msg)
     }) {
         println!("failed to create websocket: {:?}", error);
